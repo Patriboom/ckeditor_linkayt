@@ -14,6 +14,18 @@
 	//Merci à https://ckeditor.com/old/forums/CKEditor-3.x/Submit-Enter-key
    CKEDITOR.plugins.add( 'linkayt', {
    	init: function( editor ) {
+			//Submit the text  (submitting its form) by CTRL-ENTER
+			editor.on( 'key', function( evt ) {
+				if ( evt.data.keyCode == CKEDITOR.CTRL + 13 ) {
+					if (typeof(EnvoyonsCeci) == "function") { 					//First: check if a specific function exists.   Here the function's name is: « EnvoyonsCeci »
+						EnvoyonsCeci(); 													//If so: fire the specific function.   Here the function's name is: « EnvoyonsCeci »
+					} else {
+						document.getElementsByName('Soumettre')[0].click(); 	//Otherwise: click on the submit button, recongnized from its name  (Here, the name is « Soumettre » )
+					}
+					evt.cancel();
+				}
+			} );
+
 			editor.on("contentDom", function() {
 				editor.document.on("keydown", function(event) {
 			   	DernQuatre.push(event.data.getKeystroke());
